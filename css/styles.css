@@ -1,0 +1,24 @@
+body {
+  padding-top: 50px;
+}
+#main {
+	padding: 00px 15px;
+}
+table > tbody > tr:nth-child(1)  button {
+	display: none;
+}
+
+.chart-tooltip {
+	padding: 20px;
+	min-width: 200px;
+	min-height: 90px;
+}
+.area-title {
+  font-weight: bold;
+}
+.area-avg-label:before {
+  content: "Average Level: ";
+}
+.area-avg-value:before {
+  content: "Average Value: ";
+}

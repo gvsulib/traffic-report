@@ -1,0 +1,13 @@
+SELECT
+	su.spaceId,
+    s.name,
+	(-(AVG(su.groups)-6)/5)*100 as groups,
+    (-(AVG(su.alone)-6)/5)*100 as alone,
+    (-(AVG(su.individual)-6)/5)*100 as individual
+FROM
+	spaceuse su,
+    spaces s
+WHERE
+	su.spaceId = s.id
+GROUP BY
+	su.spaceId
