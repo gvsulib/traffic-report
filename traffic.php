@@ -42,21 +42,19 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
 	<script type="text/javascript">
+		var data;
 		function drawChart(refresh) {
 			if (refresh){
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET','php/avgTraffic.php?' + jQuery('form').serialize(),false);
 				xhr.send();
+				data = new google.visualization.DataTable();
+				data.addColumn('string', 'Area');
+				data.addColumn('number', 'Level', {role: 'annotationtext'});
+				data.addColumn({type: 'string', role: 'tooltip', p:{html: true}});
+
+				data.addRows(JSON.parse(xhr.responseText));
 			}
-			
-
-
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Area');
-			data.addColumn('number', 'Level', {role: 'annotationtext'});
-			data.addColumn({type: 'string', role: 'tooltip', p:{html: true}});
-
-			data.addRows(JSON.parse(xhr.responseText));
 
 			var options = {
 				height: 500,
