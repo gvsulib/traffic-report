@@ -1,13 +1,26 @@
 SELECT
-	su.spaceId,
-    s.name,
-	(-(AVG(su.groups)-6)/5)*100 as groups,
-    (-(AVG(su.alone)-6)/5)*100 as alone,
-    (-(AVG(su.individual)-6)/5)*100 as individual
+s.id,
+AVG(su.alone) as average,
+s.name,
+la.name
 FROM
-	spaceuse su,
-    spaces s
+entries e,
+spaces s,
+spaceuse su,
+collab_labels la,
+(
+	SELECT
+	spaceid,
+	ROUND(AVG(alone)) as rounded
+	FROM
+	spaceuse
+	GROUP BY
+	spaceid
+	) a
 WHERE
-	su.spaceId = s.id
+e.entryId = su.entryId
+AND su.spaceid = s.id
+AND su.spaceid = a.spaceid
+AND la.id = a.rounded
 GROUP BY
-	su.spaceId
+su.spaceid

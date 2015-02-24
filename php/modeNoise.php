@@ -3,26 +3,33 @@ include 'connection.php';
 $db = getConnection();
 $q = "
 SELECT
-s.id,
-AVG(t.level) as average,
-s.name,
-la.name
+	s.id,
+	COUNT(su.spaceid),
+	nl.name,
+	s.name
+	
 FROM
-entries e,
-traffic t,
-spaces s,
-traffic_labels la,
-(
-	SELECT
-	space,
-	ROUND(AVG(level)) as rounded
-	FROM
-	traffic
-	GROUP BY
-	space
-	) a
-WHERE
-e.entryId = t.entryId";
+	noise_labels nl
+JOIN
+	spaces s
+";
+if (isset($_GET['spaceId'])){
+	$q .= "
+	ON s.id = " . $_GET['spaceId'];
+}
+$q.="
+LEFT JOIN
+	spaceuse su
+  	ON
+  		nl.id = su.noise
+    AND 
+    	s.id = su.spaceid
+LEFT JOIN
+	entries e
+  	ON
+  		e.entryID = su.entryId
+";
+
 if (isset($_GET['days'])){
 	if (isset($_GET['days']['include'])){
 		for ($i = 0; $i < count($_GET['days']['include']['begin']); $i++){
@@ -61,15 +68,13 @@ if (isset($_GET['hours'])){
 }
 
 $q .= "
-AND t.space = s.id
-AND t.space = a.space
-AND la.id = a.rounded
 GROUP BY
-t.space";
+	s.id,
+	nl.id";
 $data;
 $db_result = $db->query($q);
 while ($area = $db_result->fetch_row()) {
-	$data[] = array($area[0], (float)$area[1], '<div class="chart-tooltip"><span class="area-title">' . $area[2] . '</span><br><span class="area-avg-label">' . $area[3] . '</span><br><span class="area-avg-value">' . $area[1] . "</span></div>");
+	$data[] = array($area[2], (int)$area[1]);
 }
 $data = json_encode($data);
 header('Content-Type: application/json');

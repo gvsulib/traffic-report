@@ -22,3 +22,12 @@ table > tbody > tr:nth-child(1)  button {
 .area-avg-value:before {
   content: "Average Value: ";
 }
+.area-mode-label:before {
+  content: "Most Frequent Level: ";
+}
+.area-mode-value:before {
+  content: "Count: ";
+}
+input[type=date]{
+	width: 80%;
+}

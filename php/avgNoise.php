@@ -4,25 +4,29 @@ $db = getConnection();
 $q = "
 SELECT
 s.id,
-AVG(t.level) as average,
+AVG(su.noise) as average,
 s.name,
 la.name
 FROM
 entries e,
-traffic t,
 spaces s,
-traffic_labels la,
+spaceuse su,
+noise_labels la,
 (
 	SELECT
-	space,
-	ROUND(AVG(level)) as rounded
+	spaceid,
+	ROUND(AVG(noise)) as rounded
 	FROM
-	traffic
+	spaceuse
 	GROUP BY
-	space
+	spaceid
 	) a
 WHERE
-e.entryId = t.entryId";
+e.entryId = su.entryId
+AND su.spaceid = s.id
+AND su.spaceid = a.spaceid
+AND la.id = a.rounded
+";
 if (isset($_GET['days'])){
 	if (isset($_GET['days']['include'])){
 		for ($i = 0; $i < count($_GET['days']['include']['begin']); $i++){
@@ -61,11 +65,8 @@ if (isset($_GET['hours'])){
 }
 
 $q .= "
-AND t.space = s.id
-AND t.space = a.space
-AND la.id = a.rounded
 GROUP BY
-t.space";
+su.spaceid";
 $data;
 $db_result = $db->query($q);
 while ($area = $db_result->fetch_row()) {
