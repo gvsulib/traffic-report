@@ -16,9 +16,7 @@
 								<td><button class="btn btn-danger" onclick="removeRange(this)">x</button></td>
 							</tr>
 							<tr>
-								<td><button class="add btn btn-success">Add</button></td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+								<td colspan="3"><button class="add btn btn-success btn-block">Add</button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -41,9 +39,7 @@
 								<td><button class="btn btn-danger" onclick="removeRange(this);">x</button></td>
 							</tr>
 							<tr>
-								<td><button class="add btn btn-success">Add</button></td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+								<td colspan="3"><button class="add btn btn-success btn-block">Add</button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -64,7 +60,7 @@
 							<tr class="template">
 								<td>
 									<select name="hours[include][begin][]" class="form-control">
-										<option value="" selected="selected" disabled="disabled"></option>
+										<option value="-1" selected="selected" disabled="disabled"></option>
 										<option value="0">12 AM</option>
 										<option value="1">1 AM</option>
 										<option value="2">2 AM</option>
@@ -93,7 +89,7 @@
 								</td>
 								<td>
 									<select name="hours[include][end][]" class="form-control">
-										<option value="" selected="selected" disabled="disabled"></option>
+										<option value="-1" selected="selected" disabled="disabled"></option>
 										<option value="0">12 AM</option>
 										<option value="1">1 AM</option>
 										<option value="2">2 AM</option>
@@ -125,9 +121,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td><button class="add btn btn-success">Add</button></td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+								<td colspan="3"><button class="add btn btn-success btn-block">Add</button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -145,8 +139,8 @@
 						<tbody>
 							<tr class="template">
 								<td>
-									<select name="exclude[hours][begin][]" class="form-control">
-										<option value="" selected="selected" disabled="disabled"></option>
+									<select name="hours[exclude][begin][]" class="form-control">
+										<option value="-1" selected="selected" disabled="disabled"></option>
 										<option value="0">12 AM</option>
 										<option value="1">1 AM</option>
 										<option value="2">2 AM</option>
@@ -174,8 +168,8 @@
 									</select>
 								</td>
 								<td>
-									<select name="exclude[hours][end][]" class="form-control">
-										<option value="" selected="selected" disabled="disabled"></option>
+									<select name="hours[exclude][end][]" class="form-control">
+										<option value="-1" selected="selected" disabled="disabled"></option>
 										<option value="0">12 AM</option>
 										<option value="1">1 AM</option>
 										<option value="2">2 AM</option>
@@ -205,9 +199,7 @@
 								<td><button class="btn btn-danger" onclick="removeRange(this);">x</button></td>
 							</tr>
 							<tr>
-								<td><button class="add btn btn-success">Add</button></td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+								<td colspan="3"><button class="add btn btn-success btn-block">Add</button></td>
 							</tr>
 						</tbody>
 					</table>	

@@ -1,3 +1,6 @@
+<?php
+$path = pathinfo($_SERVER['PHP_SELF'])['basename'];
+?>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -14,11 +17,13 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reports <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="traffic.php">Traffic</a></li>
-							<li><a href="study.php">Study Types</a></li>
-							<li><a href="noise.php">Noise (Average)</a></li>
-							<li><a href="noise-mode.php">Noise (Mode)</a></li>
-							<li><a href="whiteboard.php">Whiteboards</a></li>
+							<li <?php echo $path != 'traffic.php' ?: "class='active'"; ?>><a href="traffic.php">Traffic (Average)</a></li>
+							<li <?php echo $path != 'traffic-mode.php' ?: "class='active'"; ?>><a href="traffic-mode.php">Traffic (Mode)</a></li>
+							<li <?php echo $path != 'study.php' ?: "class='active'"; ?>><a href="study.php">Study Types</a></li>
+							<li <?php echo $path != 'noise.php' ?: "class='active'"; ?>><a href="noise.php">Noise (Average)</a></li>
+							<li <?php echo $path != 'noise-mode.php' ?: "class='active'"; ?>><a href="noise-mode.php">Noise (Mode)</a></li>
+							<li <?php echo $path != 'whiteboard.php' ?: "class='active'"; ?>><a href="whiteboard.php">Whiteboards</a></li>
+							<li <?php echo $path != 'computers.php' ?: "class='active'"; ?>><a href="computers.php">Comptuer Use</a></li>
 						</ul>
 					</li>
 				</ul>

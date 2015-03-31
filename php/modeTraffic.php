@@ -4,12 +4,12 @@ $db = getConnection();
 $q = "
 SELECT
 	s.id,
-	COUNT(su.spaceid),
-	nl.name,
+	COUNT(t.space),
+	tl.name,
 	s.name
 	
 FROM
-	noise_labels nl
+	traffic_labels tl
 JOIN
 	spaces s
 ";
@@ -19,23 +19,25 @@ if (isset($_GET['spaceId'])){
 }
 $q.="
 LEFT JOIN
-	spaceuse su
+	traffic t
   	ON
-  		nl.id = su.noise
+  		tl.id = t.level
     AND 
-    	s.id = su.spaceid
+    	s.id = t.space
 LEFT JOIN
 	entries e
   	ON
-  		e.entryID = su.entryId
+  		e.entryID = t.entryId
+WHERE 1=1
 ";
+
 
 include 'filters.php';
 
 $q .= "
 GROUP BY
 	s.id,
-	nl.id";
+	tl.id";
 $data;
 $db_result = $db->query($q);
 while ($area = $db_result->fetch_row()) {

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Traffic Report SQL Generator</title>
+	<meta http-equiv="refresh" content="0; url=traffic.php">
+	<title>Traffic Report <!-- SQL Generator --></title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<style>
 		html,body {
@@ -13,7 +14,7 @@
 	</style>
 </head>
 <body>
-	<h2>Include Dates</h2>
+	<!--h2>Include Dates</h2>
 	<table id="include" class="table">
 		<thead>
 			<tr>
@@ -85,6 +86,6 @@
 			query += "group by\n  t.space"
 			jQuery('#result').html(query);
 		}
-	</script>
+	</script-->
 </body>
 </html>

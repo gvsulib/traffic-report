@@ -55,7 +55,7 @@ for ($i = 0; $i < 3; $i++){
 			for ($j = 0; $j < count($_GET['hours']['exclude']['begin']); $j++){
 				if (!($_GET['hours']['exclude']['begin'][$j] == "" || $_GET['hours']['exclude']['begin'][$j] == "")){
 				$q .= ("
-					AND HOUR(e.time) NOT BETWEEN TIMESTAMP('" . $_GET['hours']['exclude']['begin'][$j] . " AND " . $_GET['hours']['exclude']['end'][$j]);
+					AND HOUR(e.time) NOT BETWEEN " . $_GET['hours']['exclude']['begin'][$j] . " AND " . $_GET['hours']['exclude']['end'][$j]);
 				}
 			}
 		}

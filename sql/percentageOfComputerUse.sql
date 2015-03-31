@@ -3,14 +3,20 @@ SELECT
     no.c/(yes.c+no.c)*100 as no
 FROM
 	(SELECT
-        count(*) as c
+        entryId,
+        count(computers) as c
     FROM
         spaceuse
     WHERE
         computers = 1) as yes,
     (SELECT
+        entryId,
         count(*) as c
     FROM
         spaceuse
     WHERE
-        computers = 0) as no
+        computers = 0) as no,
+    entries e
+WHERE
+    yes.entryId = e.entryId
+    OR no.entryId = e.entryId

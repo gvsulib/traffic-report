@@ -1,16 +1,39 @@
 jQuery(window).resize(function(){
-	drawChart(false);
+	if (validate()){
+		drawChart(false);
+	}
 });
 jQuery(document).ready(function(){
 	jQuery('.add').click(function(){
-		jQuery(this).closest('tbody').find('.template').after((jQuery(this).closest('tbody').find('.template').clone()).removeClass());
+		if (validate()){
+			jQuery(this).closest('tbody').find('.template').after((jQuery(this).closest('tbody').find('.template').clone()).removeClass());
+		}
 	});
-	drawChart(true);
+	if (validate()){
+		drawChart(true);
+	}
 });
 
+function validate(){
+	var valid = true;
+	jQuery('.end').each(function(i,el){
+		var end = jQuery(el);
+		var begin = end.parent().prev().children();
+		if (new Date(end.val()) < new Date(begin.val())){
+			alert("End must be after start.");
+			valid = false;
+			end.focus();
+		}
+	});
+	return valid;
+}
 
 function removeRange(row){
-	jQuery(row).parent().parent().remove();
+	if (!jQuery(row).parent().parent().index()){
+		jQuery(row).parent().parent().find(':input').val(-1);
+	} else {
+		jQuery(row).parent().parent().remove();
+	}
 }
 function getRanges(){
 	var ranges = {

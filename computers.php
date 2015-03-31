@@ -21,11 +21,10 @@
 </head>
 
 <body>
-
 	<?php include 'nav.php';?>
 	<div class="container" id="main">
 		<form onsubmit="return false;">
-			<h2>Whiteboards Use by Area</h2>
+			<h2>Computer Use</h2>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div id="chart"></div>
@@ -37,7 +36,6 @@
 		</form>
 	</div>
 
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -48,33 +46,20 @@
 		function drawChart(refresh) {
 			if (refresh){
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET','php/whiteboard.php?' + jQuery('form').serialize(),false);
+				xhr.open('GET','php/computers.php?' + jQuery('form').serialize(),false);
 				xhr.send();
 				data = new google.visualization.DataTable();
-				data.addColumn('string', 'Area');
-				data.addColumn('number', 'Level', {role: 'annotationtext'});
-				data.addColumn({type: 'string', role: 'tooltip', p:{html: true}});
+				data.addColumn('string', 'Computers');
+				data.addColumn('number', 'Percentage', {role: 'annotationtext'});
 
 				data.addRows(JSON.parse(xhr.responseText));
 			}
 
 			var options = {
-				height: 500,
-				vAxis:{
-					viewWindow: {
-						min: 0
-					},
-					title: 'Whiteboards'
-				},
-				hAxis:{
-					title: 'Area'
-				},
-				tooltip:{
-					isHtml: true
-				}
+				height: 500
 			};
 
-			var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+			var chart = new google.visualization.PieChart(document.getElementById('chart'));
 
 			chart.draw(data, options);
 			return false;
