@@ -26,7 +26,7 @@
 
 	<div class="container" id="main">
 		<form onsubmit="return false;">
-			<h2>Average Noise By Area <small>1 = Loud, 5 = Silent</small></h2>
+			<h2>Average Noise By Area</h2>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div id="chart"></div>

@@ -24,7 +24,7 @@
 	<?php include 'nav.php';?>
 	<div class="container" id="main">
 		<form onsubmit="return false;">
-			<h2>Average Traffic by Area <small>1 = Full, 5 = Empty</small></h2>
+			<h2>Average Traffic by Area</h2>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div id="chart"></div>
