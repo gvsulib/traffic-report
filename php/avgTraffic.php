@@ -32,6 +32,7 @@ AND t.space = a.space
 AND la.id = a.rounded
 GROUP BY
 t.space";
+
 $data;
 $db_result = $db->query($q);
 while ($area = $db_result->fetch_row()) {
