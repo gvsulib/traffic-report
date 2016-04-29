@@ -21,7 +21,7 @@ FROM
     WHERE
         su.computers = 1
         AND su.entryId = e.entryId
-        AND (spaceID = 11 OR spaceID = 8 OR spaceID = 14)";
+        AND su.spaceID IN (11,8,14)";
 include 'filters.php';
 $q .="
         ) as yes,
@@ -33,14 +33,14 @@ $q .="
     WHERE
         su.computers = 0
         AND su.entryId = e.entryId
-        AND (spaceID = 11 OR spaceID = 8 OR spaceID = 14)";
+        AND su.spaceID IN (11,8,14)";
 
 include 'filters.php';
 $q .="
         ) as no";
-                
-$data;
+
 $db_result = $db->query($q);
+$data[] = $feedback;
 while ($area = $db_result->fetch_row()) {
 	$data[] = array("Using", (float)$area[0]);
 	$data[] = array("Not Using", (float)$area[1]);

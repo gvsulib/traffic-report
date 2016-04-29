@@ -13,6 +13,7 @@ spaceuse su
 WHERE
 e.entryId = su.entryId
 AND su.spaceid = s.id
+AND s.whiteboard = 1
 ";
 include 'filters.php';
 

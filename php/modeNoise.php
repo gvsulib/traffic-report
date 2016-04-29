@@ -37,10 +37,15 @@ GROUP BY
 	s.id,
 	nl.id";
 $data;
+
 $db_result = $db->query($q);
+
+$data[] = $feedback;
 while ($area = $db_result->fetch_row()) {
 	$data[] = array($area[2], (int)$area[1]);
 }
+
+
 $data = json_encode($data);
 header('Content-Type: application/json');
 echo $data;
