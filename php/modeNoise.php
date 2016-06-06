@@ -4,7 +4,7 @@ $db = getConnection();
 $q = "
 SELECT
 	s.id,
-	COUNT(su.spaceid),
+	COUNT(su.noise),
 	nl.name,
 	s.name
 	
@@ -28,6 +28,7 @@ LEFT JOIN
 	entries e
   	ON
   		e.entryID = su.entryId
+WHERE 1=1
 ";
 
 include 'filters.php';
@@ -39,6 +40,11 @@ GROUP BY
 $data;
 
 $db_result = $db->query($q);
+
+$fhandle = fopen("noisequery.sql", "w");
+fwrite($fhandle, $q);
+fclose($fhandle);
+
 
 $data[] = $feedback;
 while ($area = $db_result->fetch_row()) {

@@ -2,6 +2,7 @@
 include 'connection.php';
 $db = getConnection();
 $data = array();
+
 $types = array('Groups', 'Alone', 'Individual');
 
 foreach ($types as $value){
@@ -33,7 +34,7 @@ foreach ($types as $value){
 	
 }	
 	
-
+$data[] = $feedback;
 $data = json_encode($data);
 header('Content-Type: application/json');
 echo $data;

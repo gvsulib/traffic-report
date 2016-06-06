@@ -28,6 +28,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div id="chart"></div>
+					<P style="font-size: 20pt" id="filters"></P>
 				</div>
 			</div>
 			<?php 
@@ -48,12 +49,21 @@
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET','php/avgTraffic.php?' + jQuery('form').serialize(),false);
 				xhr.send();
+				
+				var response = (JSON.parse(xhr.responseText));
+                var feedback = response[0];
+                response.splice(0,1);
+
+                var message = document.getElementById('filters');
+
+				message.innerHTML = feedback;
+				
 				data = new google.visualization.DataTable();
 				data.addColumn('string', 'Area');
 				data.addColumn('number', 'Level', {role: 'annotationtext'});
 				data.addColumn({type: 'string', role: 'tooltip', p:{html: true}});
 
-				data.addRows(JSON.parse(xhr.responseText));
+				data.addRows(response);
 			}
 
 			var options = {

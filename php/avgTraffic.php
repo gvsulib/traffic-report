@@ -22,7 +22,8 @@ traffic_labels la,
 	space
 	) a
 WHERE
-e.entryId = t.entryId";
+t.level != -1
+AND e.entryId = t.entryId";
 
 include 'filters.php';
 
@@ -33,7 +34,7 @@ AND la.id = a.rounded
 GROUP BY
 t.space";
 
-$data;
+$data[] = $feedback;
 $db_result = $db->query($q);
 while ($area = $db_result->fetch_row()) {
 	$data[] = array($area[0], (float)$area[1], '<div class="chart-tooltip"><span class="area-title">' . $area[2] . '</span><br><span class="area-avg-label">' . $area[3] . '</span><br><span class="area-avg-value">' . $area[1] . "</span></div>");

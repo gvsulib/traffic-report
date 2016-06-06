@@ -38,11 +38,13 @@ $q .= "
 GROUP BY
 	s.id,
 	tl.id";
-$data;
+$data[] = $feedback;
 $db_result = $db->query($q);
 while ($area = $db_result->fetch_row()) {
 	$data[] = array($area[2], (int)$area[1]);
 }
+
+
 $data = json_encode($data);
 header('Content-Type: application/json');
 echo $data;
