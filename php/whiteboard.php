@@ -5,7 +5,7 @@ $db = getConnection();
 
 $q = "
 SELECT
-AVG(su.whiteboard) as average
+SUM(su.whiteboard)/COUNT(DISTINCT e.entryId) as average
 FROM
 entries e,
 spaces s,

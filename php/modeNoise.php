@@ -13,7 +13,7 @@ FROM
 JOIN
 	spaces s
 ";
-if (isset($_GET['spaceId'])){
+if (isset($_GET['spaceId']) &&  $_GET['spaceId'] != "0"){
 	$q .= "
 	ON s.id = " . $_GET['spaceId'];
 }
@@ -33,11 +33,13 @@ WHERE 1=1
 
 include 'filters.php';
 
-$q .= "
-GROUP BY
-	s.id,
-	nl.id";
+$q .= "GROUP BY nl.id";
+	
 $data;
+
+$file = fopen("noisequery.sql", "a");
+fwrite($file, $q);
+fclose($file);
 
 $db_result = $db->query($q);
 

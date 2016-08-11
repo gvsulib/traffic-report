@@ -45,6 +45,7 @@
 						<li><a>14. 4th Floor West Wing Collaborative Space</a></li>
 						<li><a>15. 4th Floor East Wing Quiet Space</a></li>
 						<li><a>16. 4th Floor Reading Room</a></li>
+						<LI><a>0. All Areas</a><li>
 					</ul>
 				</li>
 			</ul>

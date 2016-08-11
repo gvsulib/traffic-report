@@ -13,7 +13,7 @@ foreach ($types as $value){
     WHERE
     	su.entryId = e.entryId
 	";
-	if (isset($_GET['spaceId'])){
+	if (isset($_GET['spaceId']) &&  $_GET['spaceId'] != "0"){
 		$q .= "
 		AND su.spaceID = " . $_GET['spaceId'];
 	}

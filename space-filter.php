@@ -15,4 +15,6 @@
 	<option value="14">4th Floor West Wing Collaborative Space</option>
 	<option value="15">4th Floor East Wing Quiet Space</option>
 	<option value="16">4th Floor Reading Room</option>
+	<option value="0">All Spaces</option>
+
 </select>
