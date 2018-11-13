@@ -1,3 +1,135 @@
+
+<?
+
+//if no query has been submitted, get averages for entire database
+if (!isset($_GET["submit"])) {
+	$request = array(
+    	"mode" => "average"
+    	
+	);
+
+	$feedback = "";
+
+
+} else {
+	$request = array(
+    	"mode" => "average"
+    	
+	);
+	$feedback = "";
+
+	//check for filter data-yes this is messy
+	if (isset($_GET['days'])){
+		if (isset($_GET['days']['include'])){
+			$request["include"] = array();
+
+
+			for ($i = 0; $i < count($_GET['days']['include']['begin']); $i++){
+				if (!($_GET['days']['include']['begin'][$i] == "" || $_GET['days']['include']['begin'][$i] == "")){
+					
+					$request["include"][] = array($_GET['days']['include']['begin'][$i], $_GET['days']['include']['end'][$i]);
+					$feedback .= "Data between dates:" . $_GET['days']['include']['begin'][$i] . " and " . $_GET['days']['include']['end'][$i] . " included<br>";
+				}
+			}
+		}
+		if (isset($_GET['days']['exclude'])){
+
+			$request["exclude"] = array();
+			for ($i = 0; $i < count($_GET['days']['exclude']['begin']); $i++){
+				if (!($_GET['days']['exclude']['begin'][$i] == "" || $_GET['days']['exclude']['begin'][$i] == "")){
+
+				$request["exclude"][] = array($_GET['days']['exclude']['begin'][$i], $_GET['days']['exclude']['end'][$i]);
+				$feedback .= "Data between dates:" . $_GET['days']['exclude']['begin'][$i] . " and " . $_GET['days']['exclude']['end'][$i] . " excluded<br>";
+							
+				}
+			}
+		}
+	}
+	if (isset($_GET['hours'])){
+		if (isset($_GET['hours']['include'])){
+
+			$request["hoursInclude"] = array();
+			for ($i = 0; $i < count($_GET['hours']['include']['begin']); $i++){
+				if (!($_GET['hours']['include']['begin'][$i] == "" || $_GET['hours']['include']['begin'][$i] == "")){
+					
+					$request["hoursInclude"][] = array($_GET['hours']['include']['begin'][$i], $_GET['hours']['include']['end'][$i]);
+				
+					$feedback .= "Data between hours:" . $_GET['hours']['include']['begin'][$i] . " and " . $_GET['hours']['include']['end'][$i] . " (24-hour clock) included<br>";
+										
+				}
+			}
+		}
+		if (isset($_GET['hours']['exclude'])){
+			$request["hoursExclude"] = array();
+			for ($i = 0; $i < count($_GET['hours']['exclude']['begin']); $i++){
+				if (!($_GET['hours']['exclude']['begin'][$i] == "" || $_GET['hours']['exclude']['begin'][$i] == "")){
+					
+					$request["hoursExclude"][] = array($_GET['hours']['exclude']['begin'][$i], $_GET['hours']['exclude']['end'][$i]);
+				
+
+					$feedback .= "Data between hours:" . $_GET['hours']['exclude']['begin'][$i] . " and " . $_GET['hours']['exclude']['end'][$i] . " (24 hour clock) excluded<br>";
+										
+				}
+			}
+		}
+	}
+
+	//and now that we are done with that business...
+
+}
+
+$json = json_encode($request);
+
+$curl = curl_init("https://prod.library.gvsu.edu/trafficapi/calculate/");
+
+curl_setopt($curl, CURLOPT_POST, 1);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($json))); 
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_VERBOSE, 1);
+curl_setopt($curl, CURLOPT_HEADER, 1);
+
+$response = curl_exec($curl);
+
+$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+$code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+$header = substr($response, 0, $header_size);
+$body = substr($response, $header_size);
+curl_close ($curl);
+
+if ($code != "200") {
+	echo "Could Not get traffic data, API returned: " . $header;
+	die();
+}
+
+$results = json_decode($body, JSON_OBJECT_AS_ARRAY);
+
+if (gettype($results) == "array") {
+
+
+	//format for display
+	$printable = array();
+	foreach ($results as $result) {
+		
+		$print = true;
+		$toolTip = '<div class="chart-tooltip"><span class="area-title">' . $result["name"] . '</span><br><span class="area-avg-value">' . $result["average"] . '</span></div>';
+	
+		$printable[] = array($result["space"], (float) $result["average"], $toolTip);
+		
+
+	} 
+	$printable = json_encode($printable);
+	
+} else {
+	$print = false;	
+	$feedback = "No Entries found for your search parameters.";
+	
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +152,11 @@
 <![endif]-->
 </head>
 
+
 <body>
 	<?php include 'nav.php';?>
 	<div class="container" id="main">
-		<form onsubmit="return false;">
+		<form>
 			<h2>Average Traffic by Area</h2>
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -44,27 +177,24 @@
 	<script type="text/javascript" src="js/scripts.js"></script>
 	<script type="text/javascript">
 		var data;
-		function drawChart(refresh) {
-			if (refresh){
-				var xhr = new XMLHttpRequest();
-				xhr.open('GET','php/avgTraffic.php?' + jQuery('form').serialize(),false);
-				xhr.send();
+		function drawChart() {
+			
 				
-				var response = (JSON.parse(xhr.responseText));
-                var feedback = response[0];
-                response.splice(0,1);
+			var message = document.getElementById('filters');
 
-                var message = document.getElementById('filters');
+			<? if ($feedback) {
+				echo 'message.innerHTML = "' . $feedback . '";';
 
-				message.innerHTML = feedback;
+
+			} ?>
 				
-				data = new google.visualization.DataTable();
-				data.addColumn('string', 'Area');
-				data.addColumn('number', 'Level', {role: 'annotationtext'});
-				data.addColumn({type: 'string', role: 'tooltip', p:{html: true}});
+			data = new google.visualization.DataTable();
+			data.addColumn('string', 'Space ID');
+			data.addColumn('number', 'Average Traffic', {role: 'annotationtext'});
+			data.addColumn({type: 'string', role: 'tooltip', p:{html: true}});
 
-				data.addRows(response);
-			}
+			<? if ($print) {echo "data.addRows($printable);";} ?>
+			
 
 			var options = {
 				height: 500,
@@ -85,7 +215,7 @@
 
 			var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
 
-			chart.draw(data, options);
+			<? if ($print) { echo "chart.draw(data, options);";} ?>
 			return false;
 		}
 	</script>

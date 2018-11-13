@@ -209,6 +209,6 @@
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<h2>Filter Data</h2>
 
-					<button type="submit" class="add btn btn-info" onclick="drawChart(true);">Filter</button>
+					<button type="submit" name="submit" value="submit" class="add btn btn-info">Filter</button>
 				</div>
 			</div>

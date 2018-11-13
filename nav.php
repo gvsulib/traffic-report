@@ -16,12 +16,7 @@
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="traffic.php">Traffic (Average)</a></li>
 						<li><a href="traffic-mode.php">Traffic (Mode)</a></li>
-						<li><a href="study.php">Study Types (average)</a></li>
-						<li><a href="study-mode.php">Study Types (Mode)</a><li>
-						<li><a href="noise.php">Noise (Average)</a></li>
-						<li><a href="noise-mode.php">Noise (Mode)</a></li>
-						<li><a href="whiteboard.php">Whiteboards</a></li>
-						<li><a href="computers.php">Comptuer Use</a></li>
+						
 					</ul>
 				</li>
 			</ul>
