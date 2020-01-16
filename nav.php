@@ -16,6 +16,7 @@
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="traffic.php">Traffic (Average)</a></li>
 						<li><a href="traffic-mode.php">Traffic (Mode)</a></li>
+						<li><a href="feedback.php">Feedback Totals</a></li>
 						
 					</ul>
 				</li>

@@ -119,6 +119,7 @@ if (gettype($results) == "array") {
 
 	} 
 	$printable = json_encode($printable);
+	//print_r($printable);
 	
 } else {
 	$print = false;	
