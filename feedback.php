@@ -1,6 +1,8 @@
 
 <?
 
+$inputError = "";
+
 if (!isset($_GET["submit"])) {
 	$reqURL = "https://prod.library.gvsu.edu/trafficapi/feedback/";
 	$inputError = false;
@@ -98,7 +100,7 @@ if (gettype($results) == "array") {
 <body>
 	<?php include 'nav.php';?>
 	<div class="container" id="main">
-	<?  if (isset($inputError)) {echo "<div class=\"alert alert-danger\" role=\"alert\">" . $inputError ."</div>";}?>
+	<?  if ($inputError != "") {echo "<div class=\"alert alert-danger\" role=\"alert\">" . $inputError ."</div>";}?>
 		<form>
 			<h2>Feedback Totals: <?  ?></h2>
 			<div class="row">
