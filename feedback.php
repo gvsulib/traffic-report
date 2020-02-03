@@ -39,11 +39,6 @@ curl_close ($curl);
 
 $results = json_decode($body, JSON_OBJECT_AS_ARRAY);
 
-
-
-
-
-
 if (gettype($results) == "array") {
 	$print = true;
 	$feedback = false;

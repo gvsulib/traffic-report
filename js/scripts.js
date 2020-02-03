@@ -4,7 +4,8 @@ jQuery(window).resize(function(){
 	}
 });
 jQuery(document).ready(function(){
-	jQuery('.add').click(function(){
+	jQuery('.add').click(function(event){
+		event.preventDefault();
 		if (validate()){
 			jQuery(this).closest('tbody').find('.template').after((jQuery(this).closest('tbody').find('.template').clone()).removeClass());
 		}
@@ -28,7 +29,9 @@ function validate(){
 	return valid;
 }
 
+
 function removeRange(row){
+	
 	if (!jQuery(row).parent().parent().index()){
 		jQuery(row).parent().parent().find(':input').val(-1);
 	} else {

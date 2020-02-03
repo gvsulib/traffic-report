@@ -81,6 +81,8 @@ if (!isset($_GET["submit"])) {
 
 $json = json_encode($request);
 
+
+
 $curl = curl_init("https://prod.library.gvsu.edu/trafficapi/calculate/");
 
 curl_setopt($curl, CURLOPT_POST, 1);
@@ -97,13 +99,18 @@ $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 $header = substr($response, 0, $header_size);
 $body = substr($response, $header_size);
 curl_close ($curl);
+if ($code == "400") {
+	$feedback = "Problem with the data requested: check your request to make sure start times/dates are befoe end times/dates";
+	$results = false;
 
-if ($code != "200") {
-	echo "Could Not get traffic data, API returned: " . $header;
-	//die();
+}else if ($code != "200") {
+	$feedback = "Could Not get traffic data, API returned: " . $header;
+	$results = false;
+} else {
+	$results = json_decode($body, JSON_OBJECT_AS_ARRAY);
 }
 
-$results = json_decode($body, JSON_OBJECT_AS_ARRAY);
+
 
 if (gettype($results) == "array") {
 
@@ -122,7 +129,7 @@ if (gettype($results) == "array") {
 	
 } else {
 	$print = false;	
-	$feedback = "No Entries found for your search parameters.";
+	$feedback .= "No Entries found for your search parameters.";
 	
 }
 
@@ -156,6 +163,7 @@ if (gettype($results) == "array") {
 <body>
 
 	<?php include 'nav.php';?>
+	
 	<div class="container" id="main">
 	<form>
 		<h2>Traffic Count By Area</h2>
